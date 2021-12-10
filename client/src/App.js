@@ -13,6 +13,12 @@ function App() {
     getNotes();
   }, []);
 
+  const deleteNote = async (id) =>{
+    await axios.delete(`http://localhost:5000/notes/${id}`).then((res)=>{
+      setNotes(notes.filter((note)=>note.note_id !== id))
+    })
+  }
+
   return (
     <>
       <h1 className="text-center mt-5">Notes App</h1>
@@ -28,6 +34,8 @@ function App() {
               <div class="card">
                 <div class="card-body">
                   <p class="card-text">{note.description}</p>
+                  <button class="btn btn-warning">Edit</button>
+                  <button onClick={()=>deleteNote(note.note_id)} class="btn btn-danger">Delete</button>
                 </div>
               </div>
             </div>
