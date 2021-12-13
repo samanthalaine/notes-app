@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [description, setDescription] = useState("")
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const getNotes = async () => {
@@ -14,25 +14,30 @@ function App() {
     getNotes();
   }, []);
 
-  const addNote = async (e) =>{
-    const newNote = { description }
+  const addNote = async (e) => {
+    const newNote = { description };
     e.preventDefault();
-    await axios.post("http://localhost:5000/notes", newNote).then(()=>{
+    await axios.post("http://localhost:5000/notes", newNote).then(() => {
       setNotes([...notes, newNote]);
-    })
-  }
+    });
+  };
 
-  const deleteNote = async (id) =>{
-    await axios.delete(`http://localhost:5000/notes/${id}`).then(()=>{
-      setNotes(notes.filter((note)=>note.note_id !== id))
-    })
-  }
+  const deleteNote = async (id) => {
+    await axios.delete(`http://localhost:5000/notes/${id}`).then(() => {
+      setNotes(notes.filter((note) => note.note_id !== id));
+    });
+  };
 
   return (
     <>
       <h1 className="text-center mt-5">Notes App</h1>
       <form onSubmit={addNote} className="d-flex mt-5">
-        <input type="text" className="form-control" placeholder="Add a note..." onChange={(e)=>setDescription(e.target.value)} />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Add a note..."
+          onChange={(e) => setDescription(e.target.value)}
+        />
         <button className="btn btn-primary">Add</button>
       </form>
 
@@ -43,8 +48,12 @@ function App() {
               <div class="card">
                 <div class="card-body">
                   <p class="card-text">{note.description}</p>
-                  <button class="btn btn-warning">Edit</button>
-                  <button onClick={()=>deleteNote(note.note_id)} class="btn btn-danger">Delete</button>
+                  <button
+                    onClick={() => deleteNote(note.note_id)}
+                    class="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
